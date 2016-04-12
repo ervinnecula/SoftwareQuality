@@ -7,6 +7,12 @@ public class Grade {
 	private double grade;
 	private String year;
 	
+	public Grade(String studentId, String courseId, double grade, String year) {
+		this.studentId = studentId;
+		this.courseId = courseId;
+		this.grade = grade;
+		this.year = year;
+	}
 	public String getStudentId() {
 		return studentId;
 	}

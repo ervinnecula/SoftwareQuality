@@ -1,5 +1,6 @@
 package io;
 
+import java.io.File;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
@@ -10,7 +11,7 @@ import java.util.List;
 
 import entities.Student;
 
-public class FileReader {
+public class DatabaseFileReader {
 	
 	private static List<Student> students;
 	
@@ -18,12 +19,13 @@ public class FileReader {
 		 students = new ArrayList<>();
 	}
 	
-	public static List<Student> loadAllStudentsFromDB(){
+	public List<Student> loadAllStudentsFromDB(){
 		
+		ClassLoader classLoader = getClass().getClassLoader();
+		File file = new File(classLoader.getResource("student.tsv").getFile());
 		
-		Path path = Paths.get("WebContent/WEB-INF/database/students.tsv");
 		try {
-			List<String> fileLines = Files.readAllLines(path, StandardCharsets.US_ASCII);
+			List<String> fileLines = Files.readAllLines(file.toPath(), StandardCharsets.US_ASCII);
 			
 			for(String fileLine: fileLines){
 				String[] splitResult = fileLine.split("\t");
@@ -39,7 +41,7 @@ public class FileReader {
 		return students;
 	}
 	
-	public static Student getStudentById(String id){
+	public Student getStudentById(String id){
 		
 		loadAllStudentsFromDB();
 		

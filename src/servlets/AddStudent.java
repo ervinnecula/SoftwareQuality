@@ -1,11 +1,15 @@
 package servlets;
 
 import java.io.IOException;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import entities.Student;
+import services.StudentOperations;
 
 /**
  * Servlet implementation class AddStudent
@@ -22,13 +26,13 @@ public class AddStudent extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
 		String name = (String) request.getParameter("name");
-		String id;
+		String id = (String) request.getParameter("id");
 		String startingYear = (String) request.getParameter("startingYear");
 		String admissionGrade = (String) request.getParameter("admissionGrade");
 		
+		StudentOperations so = new StudentOperations();
+		so.saveStudent(new Student(id,name,startingYear,admissionGrade));
 		
-		
-//		request.setAttribute("name", name);
 		
 		request.getRequestDispatcher("WEB-INF/success.jsp").forward(request, response);
 	}

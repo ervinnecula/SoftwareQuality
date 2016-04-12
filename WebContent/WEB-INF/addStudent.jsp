@@ -15,21 +15,21 @@
 		<ul class="pager">
 		  <li class="previous"><a href="Main">&larr; Back</a></li>
 		</ul>
-		<form class="form-horizontal">
+		<form class="form-horizontal" action="AddStudent" method="post">
 			<fieldset>
 				<legend>Add student form</legend>
 				
 				<div class="form-group">
 					<label for="id" class="col-lg-2 control-label">Id</label>
 					<div class="col-lg-10">
-						<input type="text" class="form-control" id="id"
+						<input type="text" class="form-control" name="id"
 							placeholder="132">
 					</div>
 				</div>
 				<div class="form-group">
 					<label for="name" class="col-lg-2 control-label">Name</label>
 					<div class="col-lg-10">
-						<input type="text" class="form-control" id="name"
+						<input type="text" class="form-control" name="name"
 							placeholder="Ionescu">
 					</div>
 				</div>
@@ -37,7 +37,7 @@
 					<label for="startingYear" class="col-lg-2 control-label">Starting
 						Year</label>
 					<div class="col-lg-10">
-						<input type="text" class="form-control" id="startingYear"
+						<input type="text" class="form-control" name="startingYear"
 							placeholder="2013">
 					</div>
 				</div>
@@ -45,7 +45,7 @@
 					<label for="admissionGrade" class="col-lg-2 control-label">Admission
 						Grade</label>
 					<div class="col-lg-10">
-						<input type="text" class="form-control" id="admissionGrade"
+						<input type="text" class="form-control" name="admissionGrade"
 							placeholder="9.5">
 					</div>
 				</div>
