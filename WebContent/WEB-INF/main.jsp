@@ -16,8 +16,13 @@
 		<ul class="nav nav-tabs">
 			<li class="active"><a aria-expanded="false" href="#students" data-toggle="tab">Students</a></li>
 			<li><a aria-expanded="true" href="#course" data-toggle="tab">Course</a></li>
-		</ul>
-		
+			<ul class="nav navbar-nav navbar-right" style="margin-right: 30px;">
+				<li><a href="AddStudent">Add Student</a></li>
+				<li><a href="AddCourse">Add Course</a></li>
+				<li><a href="#">Add Grade</a></li>
+			</ul>
+	</ul>
+	
 		<div class="tab-content" id="myTabContent">
 			<div class="tab-pane fade active in" id="students">
 				<table class="table table-striped table-hover ">
@@ -86,5 +91,6 @@
 			</div>
 		</div>
 	</nav>
+	
 </body>
 </html>

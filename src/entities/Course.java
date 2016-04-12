@@ -6,8 +6,16 @@ public class Course {
 	private String name;
 	private String semester;
 	private String year;
-	private String points; 
-	
+	private String credit; 
+		
+	public Course(String id, String name, String semester, String year, String credit) {
+		super();
+		this.id = id;
+		this.name = name;
+		this.semester = semester;
+		this.year = year;
+		this.credit = credit;
+	}
 	public String getId() {
 		return id;
 	}
@@ -32,11 +40,11 @@ public class Course {
 	public void setYear(String year) {
 		this.year = year;
 	}
-	public String getPoints() {
-		return points;
+	public String getCredit() {
+		return credit;
 	}
-	public void setPoints(String points) {
-		this.points = points;
+	public void setPoints(String credit) {
+		this.credit = credit;
 	}
 	
 }
