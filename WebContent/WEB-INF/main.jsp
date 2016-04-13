@@ -26,58 +26,24 @@
 		<div class="tab-content" id="myTabContent">
 			<div class="tab-pane fade active in" id="students">
 				<table class="table table-striped table-hover ">
-					  <thead>
+				 <thead>
 					    <tr>
-					      <th>#</th>
-					      <th>Column heading</th>
-					      <th>Column heading</th>
-					      <th>Column heading</th>
+					      <th>Id</th>
+					      <th>Name</th>
+					      <th>Start Year</th>
+					      <th>Admission Grade</th>
 					    </tr>
 					  </thead>
 					  <tbody>
+					<%--   <c:forEach items="${students}" var="students">
 					    <tr>
-					      <td>1</td>
-					      <td>Column content</td>
-					      <td>Column content</td>
-					      <td>Column content</td>
+					    	<td><c:out value="${students.id}"/></td>  
+					    	<td><c:out value="${students.name}"/></td>  
+					    	<td><c:out value="${students.startingYear}"/></td>  
+					    	<td><c:out value="${students.admissionGrade}"/></td>  
 					    </tr>
-					    <tr>
-					      <td>2</td>
-					      <td>Column content</td>
-					      <td>Column content</td>
-					      <td>Column content</td>
-					    </tr>
-					    <tr class="info">
-					      <td>3</td>
-					      <td>Column content</td>
-					      <td>Column content</td>
-					      <td>Column content</td>
-					    </tr>
-					    <tr class="success">
-					      <td>4</td>
-					      <td>Column content</td>
-					      <td>Column content</td>
-					      <td>Column content</td>
-					    </tr>
-					    <tr class="danger">
-					      <td>5</td>
-					      <td>Column content</td>
-					      <td>Column content</td>
-					      <td>Column content</td>
-					    </tr>
-					    <tr class="warning">
-					      <td>6</td>
-					      <td>Column content</td>
-					      <td>Column content</td>
-					      <td>Column content</td>
-					    </tr>
-					    <tr class="active">
-					      <td>7</td>
-					      <td>Column content</td>
-					      <td>Column content</td>
-					      <td>Column content</td>
-					    </tr>
-					  </tbody>
+					</c:forEach> --%>
+					  </tbody> 
 					</table> 
 			</div>
 			<div class="tab-pane fade" id="course">

@@ -21,9 +21,9 @@ public class StudentOperations {
 	}
 	
 	public List<Student> getAllStudents(){
-		DatabaseFileReader dfr = new DatabaseFileReader();
-		
-		return dfr.loadAllStudentsFromDB();
+		DatabaseFileReader.init();
+		DatabaseFileReader.loadAllStudentsFromDB();
+		return DatabaseFileReader.getStudents();
 	}
 		
 	public void saveStudent(Student student){
