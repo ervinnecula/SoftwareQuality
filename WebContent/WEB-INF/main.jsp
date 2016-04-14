@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %> 
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
@@ -35,14 +36,14 @@
 					    </tr>
 					  </thead>
 					  <tbody>
-					<%--   <c:forEach items="${students}" var="students">
+					<c:forEach items="${students}" var="student">
 					    <tr>
-					    	<td><c:out value="${students.id}"/></td>  
-					    	<td><c:out value="${students.name}"/></td>  
-					    	<td><c:out value="${students.startingYear}"/></td>  
-					    	<td><c:out value="${students.admissionGrade}"/></td>  
+					    	<td><c:out value="${student.id}"/></td>  
+					    	<td><c:out value="${student.name}"/></td>  
+					    	<td><c:out value="${student.startingYear}"/></td>  
+					    	<td><c:out value="${student.admissionGrade}"/></td>  
 					    </tr>
-					</c:forEach> --%>
+					</c:forEach>
 					  </tbody> 
 					</table> 
 			</div>

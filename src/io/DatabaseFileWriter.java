@@ -1,34 +1,24 @@
 package io;
 
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileWriter;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.nio.file.StandardOpenOption;
 
 import entities.Student;
 
 public class DatabaseFileWriter {
 
-	public void saveStudentToFile(Student student) {
-		
+	private static final String PATH_TO_STUDENTS_FILE = "Y:\\git\\SoftwareQuality\\students.tsv";
+	
+	public static void saveStudentToFile(Student student) {
+
 		try {
-			ClassLoader classLoader = getClass().getClassLoader();
-			File file = new File(classLoader.getResource("student.tsv").getFile());
-			
-			if (!file.exists()) {
-				file.createNewFile();
-			}
-			
-			BufferedWriter bw = new BufferedWriter(new FileWriter(file.getAbsoluteFile()));
-			
-			bw.write(student.getId()+"\t"+student.getName()+"\t"+student.getStartingYear()+"\t"+student.getAdmissionGrade());
-			bw.newLine();
-			
-			bw.close();
-			
-		} catch (IOException e) {
+		    Files.write(Paths.get(PATH_TO_STUDENTS_FILE),
+		    			("\n" + student.getId() + "\t" + student.getName() + "\t" + student.getStartingYear() + "\t" + student.getStartingYear() + "\t" + student.getAdmissionGrade()).getBytes(),
+		    			 StandardOpenOption.APPEND);
+		}catch (IOException e) {
 			e.printStackTrace();
-		} 
-		
+		}
 	}
 }
