@@ -15,7 +15,7 @@ public class DatabaseFileWriter {
 
 		try {
 		    Files.write(Paths.get(PATH_TO_STUDENTS_FILE),
-		    			("\n" + student.getId() + "\t" + student.getName() + "\t" + student.getStartingYear() + "\t" + student.getStartingYear() + "\t" + student.getAdmissionGrade()).getBytes(),
+		    			("\n" + student.getId() + "\t" + student.getName() + "\t" + student.getStartingYear() + "\t" + student.getAdmissionGrade()).getBytes(),
 		    			 StandardOpenOption.APPEND);
 		}catch (IOException e) {
 			e.printStackTrace();
