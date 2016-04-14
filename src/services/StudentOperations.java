@@ -8,18 +8,16 @@ import io.DatabaseFileWriter;
 
 public class StudentOperations {
 
-	private List<Student> students;
-	
 	public Student getStudentById(String id){
 		return DatabaseFileReader.getStudentById(id);
 	}
 	
 	public List<Student> getAllStudents(){
-		students = DatabaseFileReader.loadAllStudentsFromDB();
-		return students;
+		return DatabaseFileReader.loadAllStudentsFromDB();
 	}
 		
 	public void saveStudent(Student student){
 		DatabaseFileWriter.saveStudentToFile(student);
 	}
+	
 }

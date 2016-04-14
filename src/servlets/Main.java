@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import services.CourseOperations;
 import services.StudentOperations;
 
 /**
@@ -22,6 +23,8 @@ public class Main extends HttpServlet {
 		
 		StudentOperations studOp = new StudentOperations();
 		request.setAttribute("students", studOp.getAllStudents());
+		CourseOperations courseOp = new CourseOperations();
+		request.setAttribute("courses", courseOp.getAllCourses());
 		request.getRequestDispatcher("WEB-INF/main.jsp").forward(request, response);
 
 	}

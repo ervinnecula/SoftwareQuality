@@ -3,36 +3,37 @@ package io;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
+import database.DatabaseDetails;
+import entities.Course;
 import entities.Student;
 
 public class DatabaseFileReader {
 	
-	private static final String PATH_TO_STUDENTS_FILE = "Y:\\git\\SoftwareQuality\\students.tsv";
-	
 	public static List<Student> loadAllStudentsFromDB(){
 
-		List<Student> students = new ArrayList<Student>();		
+		List<Student> students = new ArrayList<Student>();
 		
 		try {
-			
-			BufferedReader br = new BufferedReader(new FileReader(PATH_TO_STUDENTS_FILE));
-		    StringBuilder sb = new StringBuilder();
-		    String fileLine = br.readLine();
-		    
-			    while (fileLine != null) {
-	
-			    
-			    String[] splitResult = fileLine.split("\t");
-			    
-				Student student = new Student(splitResult[0], splitResult[1],
-							splitResult[2], splitResult[3]);
-				
-				students.add(student);
-				
+
+			BufferedReader br = new BufferedReader(new FileReader(
+					DatabaseDetails.PATH_TO_STUDENTS_FILE));
+			String fileLine = br.readLine();
+
+			while (fileLine != null) {
+				if (!fileLine.isEmpty()) {
+					String[] splitResult = fileLine.split("\t");
+
+					Student student = new Student(splitResult[0],
+							splitResult[1], splitResult[2], splitResult[3]);
+
+					students.add(student);
+				}
 				fileLine = br.readLine();
-				
+
 			    }
 			    
 		    br.close();
@@ -44,9 +45,63 @@ public class DatabaseFileReader {
 		return students;
 	}
 	
+	public static List<Course> loadAllCoursesFromDB(){
+
+		List<Course> courses = new ArrayList<Course>();
+
+		try {
+			BufferedReader br = new BufferedReader(new FileReader(
+					DatabaseDetails.PATH_TO_COURSES_FILE));
+			String fileLine = br.readLine();
+
+			while (fileLine != null) {
+				if (!fileLine.isEmpty()) {
+					String[] splitResult = fileLine.split("\t");
+
+					Course course = new Course(splitResult[0], splitResult[1],
+							splitResult[2], splitResult[3], splitResult[4]);
+
+					courses.add(course);
+				}
+				fileLine = br.readLine();
+
+			}
+			br.close();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		return courses;
+	}
+	
+	public static Map<String,String> loadCoursesAsMap(){
+
+		Map<String,String> courses = new HashMap<String, String>();
+
+		try {
+			BufferedReader br = new BufferedReader(new FileReader(
+					DatabaseDetails.PATH_TO_COURSES_FILE));
+			String fileLine = br.readLine();
+
+			while (fileLine != null) {
+				if (!fileLine.isEmpty()) {
+					String[] splitResult = fileLine.split("\t");
+
+					courses.put(splitResult[0], splitResult[1]);
+				}
+				fileLine = br.readLine();
+			}
+			br.close();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		return courses;
+	}
+	
+	
 	public static Student getStudentById(String id){
 		
-	
 		List<Student> students = new ArrayList<Student>();
 		students = loadAllStudentsFromDB();
 		

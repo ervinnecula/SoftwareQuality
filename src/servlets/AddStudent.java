@@ -33,7 +33,6 @@ public class AddStudent extends HttpServlet {
 		StudentOperations so = new StudentOperations();
 		so.saveStudent(new Student(id,name,startingYear,admissionGrade));
 		
-		
 		request.getRequestDispatcher("WEB-INF/addStudent.jsp").forward(request, response);
 	}
 

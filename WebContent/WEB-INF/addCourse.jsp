@@ -15,41 +15,48 @@
 		<ul class="pager">
 		  <li class="previous"><a href="Main">&larr; Back</a></li>
 		</ul>
-		<form class="form-horizontal">
+		<form class="form-horizontal" action="AddCourse" method="post">
 			<fieldset>
 				<legend>Add course form</legend>
 				
 				<div class="form-group">
 					<label for="id" class="col-lg-2 control-label">Id</label>
 					<div class="col-lg-10">
-						<input type="text" class="form-control" id="id"
+						<input type="text" class="form-control" name="id"
 							placeholder="100">
 					</div>
 				</div>
 				<div class="form-group">
 					<label for="name" class="col-lg-2 control-label">Name</label>
 					<div class="col-lg-10">
-						<input type="text" class="form-control" id="name"
+						<input type="text" class="form-control" name="name"
 							placeholder="Proiectarea Algoritmilor">
 					</div>
 				</div>
 				<div class="form-group">
-					<label for="startingYear" class="col-lg-2 control-label">Semester</label>
+					<label for="semester" class="col-lg-2 control-label">Semester</label>
 					<div class="col-lg-10">
-						   <select class="form-control" id="select">
+						   <select class="form-control" name="semester">
 					          <option>1</option>
 					          <option>2</option>
 					        </select>
 					</div>
 				</div>
 				<div class="form-group">
-					<label for="admissionGrade" class="col-lg-2 control-label">Year</label>
+					<label for="year" class="col-lg-2 control-label">Year</label>
 					<div class="col-lg-10">
-						<select class="form-control" id="select">
+						<select class="form-control" name="year">
 					          <option>1</option>
 					          <option>2</option>
 					          <option>3</option>
 					        </select>
+					</div>
+				</div>
+				<div class="form-group">
+					<label for="credit" class="col-lg-2 control-label">Credit</label>
+					<div class="col-lg-10">
+						<input type="text" class="form-control" name="credit"
+							placeholder="100">
 					</div>
 				</div>
 

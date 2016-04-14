@@ -20,7 +20,7 @@
 			<ul class="nav navbar-nav navbar-right" style="margin-right: 30px;">
 				<li><a href="AddStudent">Add Student</a></li>
 				<li><a href="AddCourse">Add Course</a></li>
-				<li><a href="#">Add Grade</a></li>
+				<li><a href="AddGrade">Add Grade</a></li>
 			</ul>
 	</ul>
 	
@@ -48,14 +48,29 @@
 					</table> 
 			</div>
 			<div class="tab-pane fade" id="course">
-				<p>Food truck fixie locavore, accusamus mcsweeney's marfa nulla
-					single-origin coffee squid. Exercitation +1 labore velit, blog
-					sartorial PBR leggings next level wes anderson artisan four loko
-					farm-to-table craft beer twee. Qui photo booth letterpress, commodo
-					enim craft beer mlkshk aliquip jean shorts ullamco ad vinyl cillum
-					PBR. Homo nostrud organic, assumenda labore aesthetic magna delectus
-					mollit.</p>
-			</div>
+			<table class="table table-striped table-hover ">
+				<thead>
+					<tr>
+						<th>Id</th>
+						<th>Name</th>
+						<th>Semester</th>
+						<th>Year</th>
+						<th>Credit</th>
+					</tr>
+				</thead>
+				<tbody>
+					<c:forEach items="${courses}" var="course">
+						<tr>
+							<td><c:out value="${course.id}" /></td>
+							<td><c:out value="${course.name}" /></td>
+							<td><c:out value="${course.semester}" /></td>
+							<td><c:out value="${course.year}" /></td>
+							<td><c:out value="${course.credit}" /></td>
+						</tr>
+					</c:forEach>
+				</tbody>
+			</table>
+		</div>
 		</div>
 	</nav>
 	
