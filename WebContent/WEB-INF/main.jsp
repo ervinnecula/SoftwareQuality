@@ -33,15 +33,19 @@
 					      <th>Name</th>
 					      <th>Start Year</th>
 					      <th>Admission Grade</th>
+					      <th>Credits</th>
+					      <th>Points</th>
 					    </tr>
 					  </thead>
 					  <tbody>
-					<c:forEach items="${students}" var="student">
+					<c:forEach items="${mdos}" var="item">
 					    <tr>
-					    	<td><c:out value="${student.id}"/></td>  
-					    	<td><c:out value="${student.name}"/></td>  
-					    	<td><c:out value="${student.startingYear}"/></td>  
-					    	<td><c:out value="${student.admissionGrade}"/></td>  
+					    	<td><c:out value="${item.student.id}"/></td>  
+					    	<td><c:out value="${item.student.name}"/></td>  
+					    	<td><c:out value="${item.student.startingYear}"/></td>  
+					    	<td><c:out value="${item.student.admissionGrade}"/></td> 
+					    	<td><c:out value="${item.credits}"/></td>
+					    	<td><c:out value="${item.points}"/></td>
 					    </tr>
 					</c:forEach>
 					  </tbody> 

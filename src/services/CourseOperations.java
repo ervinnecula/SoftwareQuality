@@ -29,7 +29,7 @@ public class CourseOperations {
 		
 		for(Grade grade: grades){
 			for(Course course:courses){
-				if(grade.getCourseId().equals(course.getId()) && grade.getYear().equals(course.getYear())){
+				if(grade.getCourseId().equals(courseId) && grade.getCourseId().equals(course.getId()) && grade.getYear().equals(course.getYear())){
 					return true;
 				}
 				

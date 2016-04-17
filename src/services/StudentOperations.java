@@ -47,7 +47,7 @@ public class StudentOperations {
 		CourseOperations co = new CourseOperations();
 		
 		for(Grade grade:grades){
-			if(grade.getGrade() > 5.0 && co.checkIfPassedAtFirstTime(studentId, grade.getCourseId())){
+			if(grade.getGrade() >= 5.0 && co.checkIfPassedAtFirstTime(studentId, grade.getCourseId())){
 				credits = credits + Integer.parseInt(co.getCreditsOfCourse(grade.getCourseId()));
 			}
 		}
@@ -57,12 +57,22 @@ public class StudentOperations {
 	
 	public List<String> calculateCreditsForStudents(){
 		List<Student> students = DatabaseFileReader.loadAllStudentsFromDB();
-		List<String> credits = new ArrayList<String>();
+		List<String> creditList = new ArrayList<String>();
 		for(Student student:students){
-			String credit = calculateCreditsForStudent(student.getId());
-			credits.add(credit);
+			String credits = calculateCreditsForStudent(student.getId());
+			creditList.add(credits);
 		}
-		return credits;
+		return creditList;
+	}
+	
+	public List<String> calculatePointsForStudents(){
+		List<Student> students = DatabaseFileReader.loadAllStudentsFromDB();
+		List<String> pointsList = new ArrayList<String>();
+		for(Student student:students){
+			String points = calculatePointsForStudent(student.getId());
+			pointsList.add(points);
+		}
+		return pointsList;
 	}
 	
 }
