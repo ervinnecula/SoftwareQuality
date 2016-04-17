@@ -9,7 +9,6 @@ public class Course {
 	private String credit; 
 		
 	public Course(String id, String name, String semester, String year, String credit) {
-		super();
 		this.id = id;
 		this.name = name;
 		this.semester = semester;

@@ -23,6 +23,7 @@ public class Main extends HttpServlet {
 		
 		StudentOperations studOp = new StudentOperations();
 		request.setAttribute("students", studOp.getAllStudents());
+		request.setAttribute("credits", studOp.calculateCreditsForStudents());
 		CourseOperations courseOp = new CourseOperations();
 		request.setAttribute("courses", courseOp.getAllCourses());
 		request.getRequestDispatcher("WEB-INF/main.jsp").forward(request, response);

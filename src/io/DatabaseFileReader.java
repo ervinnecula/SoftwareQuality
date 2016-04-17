@@ -9,6 +9,7 @@ import java.util.Map;
 
 import database.DatabaseDetails;
 import entities.Course;
+import entities.Grade;
 import entities.Student;
 
 public class DatabaseFileReader {
@@ -99,7 +100,6 @@ public class DatabaseFileReader {
 		return courses;
 	}
 	
-	
 	public static Student getStudentById(String id){
 		
 		List<Student> students = new ArrayList<Student>();
@@ -111,5 +111,36 @@ public class DatabaseFileReader {
 			}
 		}
 		return null;
+	}
+
+	public static List<Grade> loadGradesForStudent(String studentId){
+		
+		List<Grade> grades = new ArrayList<Grade>();
+
+		try {
+			BufferedReader br = new BufferedReader(new FileReader(
+					DatabaseDetails.PATH_TO_GRADES_FILE));
+			String fileLine = br.readLine();
+
+			while (fileLine != null) {
+				if (!fileLine.isEmpty()) {
+					String[] splitResult = fileLine.split("\t");
+					
+					if(splitResult[0].equals(studentId)){
+						Grade grade = new Grade(splitResult[0], splitResult[1],
+							Double.parseDouble(splitResult[2]), splitResult[3]);
+						grades.add(grade);
+					}
+					
+				}
+				fileLine = br.readLine();
+
+			}
+			br.close();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		return grades;
 	}
 }
