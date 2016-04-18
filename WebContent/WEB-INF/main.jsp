@@ -16,7 +16,9 @@
 	
 		<ul class="nav nav-tabs">
 			<li class="active"><a aria-expanded="false" href="#students" data-toggle="tab">Students</a></li>
-			<li><a aria-expanded="true" href="#course" data-toggle="tab">Course</a></li>
+			<li><a aria-expanded="true" href="#course" data-toggle="tab">Courses</a></li>
+			<li><a aria-expanded="true" href="#situation" data-toggle="tab">Students situation</a></li>
+			
 			<ul class="nav navbar-nav navbar-right" style="margin-right: 30px;">
 				<li><a href="AddStudent">Add Student</a></li>
 				<li><a href="AddCourse">Add Course</a></li>
@@ -33,6 +35,7 @@
 					      <th>Name</th>
 					      <th>Start Year</th>
 					      <th>Admission Grade</th>
+					      <th>Average Grade</th>
 					      <th>Credits</th>
 					      <th>Points</th>
 					    </tr>
@@ -43,7 +46,8 @@
 					    	<td><c:out value="${item.student.id}"/></td>  
 					    	<td><c:out value="${item.student.name}"/></td>  
 					    	<td><c:out value="${item.student.startingYear}"/></td>  
-					    	<td><c:out value="${item.student.admissionGrade}"/></td> 
+					    	<td><c:out value="${item.student.admissionGrade}"/></td>
+					    	<td><c:out value="${item.averageGrade}"/></td> 
 					    	<td><c:out value="${item.credits}"/></td>
 					    	<td><c:out value="${item.points}"/></td>
 					    </tr>
@@ -67,14 +71,41 @@
 						<tr>
 							<td><c:out value="${course.id}" /></td>
 							<td><c:out value="${course.name}" /></td>
-							<td><c:out value="${course.semester}" /></td>
 							<td><c:out value="${course.year}" /></td>
+							<td><c:out value="${course.semester}" /></td>
 							<td><c:out value="${course.credit}" /></td>
 						</tr>
 					</c:forEach>
 				</tbody>
 			</table>
 		</div>
+		
+		<div class="tab-pane fade" id="situation">
+			<table class="table table-striped table-hover ">
+				<thead>
+					<tr>
+						<th>Id</th>
+						<th>Name</th>
+						<th>Average Grade</th>
+						<th>Credits</th>
+						<th>Points</th>
+						<th>State</th>
+					</tr>
+				</thead>
+				<tbody>
+					<c:forEach items="${orderedMdos}" var="item">
+						<tr>
+					    	<td><c:out value="${item.student.id}"/></td>  
+					    	<td><c:out value="${item.student.name}"/></td>  
+					    	<td><c:out value="${item.averageGrade}"/></td> 
+					    	<td><c:out value="${item.credits}"/></td>
+					    	<td><c:out value="${item.points}"/></td>
+					    	<td><c:out value="${item.state}"/></td>
+					    </tr>
+					</c:forEach>
+				</tbody>
+			</table>
+		
 		</div>
 	</nav>
 	

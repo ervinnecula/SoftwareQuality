@@ -1,9 +1,13 @@
 package services;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
+import database.DatabaseDetails;
 import entities.Grade;
+import entities.MainDisplayObject;
+import entities.States;
 import entities.Student;
 import io.DatabaseFileReader;
 import io.DatabaseFileWriter;
@@ -75,4 +79,67 @@ public class StudentOperations {
 		return pointsList;
 	}
 	
+	public String calculateAverageGradeForStudent(String studentId){
+		
+		List<Grade> gradesOfStudent = DatabaseFileReader.loadGradesForStudent(studentId);
+		
+		double totalOfGrades = 0.0;
+		int counter = 0;
+		
+		for(Grade grade:gradesOfStudent){
+			totalOfGrades += grade.getGrade();
+			counter++;
+		}
+		
+		double average = totalOfGrades / counter;
+		
+		return average+"";
+	}
+	
+	public List<String> calculateAverageGradeForStudents(){
+		
+		List<String> averageGrades = new ArrayList<String>();
+		
+		List<Student> studentList = DatabaseFileReader.loadAllStudentsFromDB();
+		for(Student student: studentList){
+			String average = calculateAverageGradeForStudent(student.getId());
+			averageGrades.add(average);
+		}
+		
+		return averageGrades;
+	}
+	
+	public States caculateStateForStudent(String studentId){
+		
+		String credits = calculateCreditsForStudent(studentId);
+		String points = calculatePointsForStudent(studentId);
+		
+		if (credits.equals(DatabaseDetails.MAXIMUM_CREDITS)) {
+			return States.SCOLARSHIP;
+		} 
+		else if (Integer.parseInt(credits) >= Integer.parseInt(DatabaseDetails.MINIMUM_CREDITS)
+				&& Integer.parseInt(points) >= Integer.parseInt(DatabaseDetails.MINIMUM_POINTS_FOR_BUDGET)) {
+			return States.BUDGET;
+		} 
+		else if (Integer.parseInt(credits) >= Integer.parseInt(DatabaseDetails.MINIMUM_CREDITS)
+				&& Integer.parseInt(points) < Integer.parseInt(DatabaseDetails.MINIMUM_POINTS_FOR_BUDGET)) {
+			return States.TAX;
+		} 
+		else
+			return States.REPEATYEAR;
+	}
+	
+	public List<States> calculateStateForStudents(){
+		
+		List<Student> students = DatabaseFileReader.loadAllStudentsFromDB();
+		List<States> states = new ArrayList<States>();
+		
+		for(Student student:students){
+			States state = caculateStateForStudent(student.getId());
+			
+			states.add(state);
+		}
+		return states;
+	}
+
 }
