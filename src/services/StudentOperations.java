@@ -1,7 +1,8 @@
 package services;
 
+import java.io.FileOutputStream;
+import java.io.PrintWriter;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 import database.DatabaseDetails;
@@ -140,6 +141,42 @@ public class StudentOperations {
 			states.add(state);
 		}
 		return states;
+	}
+	
+	public void exportSituationToFile(List<MainDisplayObject> mdos) {
+		try {
+			PrintWriter pw = new PrintWriter(new FileOutputStream("C:\\Users\\Ervin\\Desktop\\situation export.tsv"));
+
+			pw.println("ID" + "\t" + "NAME" + "\t" + "AVG.GRADE" + "\t" + "CREDITS" + "\t" + "POINTS" + "\t");
+			for (MainDisplayObject mdo : mdos) {
+				pw.println(mdo.getStudent().getId() + "\t" + mdo.getStudent().getName() + "\t" + mdo.getAverageGrade() + "\t" + mdo.getCredits() + "\t"
+						+ mdo.getPoints() + "\t" + mdo.getState());
+			}
+			pw.flush();
+			pw.close();
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	public void exportStudentToFile(String studentId, List<MainDisplayObject> mdos){
+		
+		try {
+			PrintWriter pw = new PrintWriter(new FileOutputStream("situation student " + studentId + ".tsv"));
+		
+			for (MainDisplayObject mdo : mdos) {
+				if (mdo.getStudent().getId().equals(studentId)) {
+					pw.println(mdo.getStudent().getId()  + "\t" + mdo.getStudent().getName() +  "\t" + mdo.getAverageGrade() + "\t" + mdo.getCredits() + "\t"
+							+ mdo.getPoints() + "\t" + mdo.getState());
+				}
+			}
+			pw.close();
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	
 	}
 
 }

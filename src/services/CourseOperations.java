@@ -1,5 +1,7 @@
 package services;
 
+import java.io.FileOutputStream;
+import java.io.PrintWriter;
 import java.util.List;
 import java.util.Map;
 
@@ -49,6 +51,25 @@ public class CourseOperations {
 		}
 		
 		return null;
+	}
+	
+	public void exportCoursesToFile(){
+		
+		try {
+			PrintWriter pw = new PrintWriter(new FileOutputStream("courses-exported.tsv"));
+			
+			List<Course> courses = DatabaseFileReader.loadAllCoursesFromDB();
+
+			for (Course course : courses) {
+				pw.println(course.getId() + "\t" + course.getName() + "\t" + course.getCredit() + "\t" + course.getYear() + "\t" + course.getSemester() );
+			}
+			
+			pw.close();
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
 	}
 	 
 }

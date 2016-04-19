@@ -18,13 +18,26 @@
 			<li class="active"><a aria-expanded="false" href="#students" data-toggle="tab">Students</a></li>
 			<li><a aria-expanded="true" href="#course" data-toggle="tab">Courses</a></li>
 			<li><a aria-expanded="true" href="#situation" data-toggle="tab">Students situation</a></li>
-			
-			<ul class="nav navbar-nav navbar-right" style="margin-right: 30px;">
+
+			<a href="#" class="btn btn-default dropdown-toggle"
+				data-toggle="dropdown" aria-expanded="false"><span class="caret"></span></a>
+			<ul class="dropdown-menu">
+				<li><a href="#">
+						<form action="${pageContext.request.contextPath}/Main" method="post">
+						    <input type="submit" name="button1" class="btn btn-success" value="Save situation" />
+						    <input type="submit" name="button2" class="btn btn-success" value="Save courses" />
+						</form>
+					</a>
+				</li>
+			</ul>
+
+		<ul class="nav navbar-nav navbar-right" style="margin-right: 30px;">
 				<li><a href="AddStudent">Add Student</a></li>
 				<li><a href="AddCourse">Add Course</a></li>
 				<li><a href="AddGrade">Add Grade</a></li>
 			</ul>
-	</ul>
+			
+		</ul>
 	
 		<div class="tab-content" id="myTabContent">
 			<div class="tab-pane fade active in" id="students">
