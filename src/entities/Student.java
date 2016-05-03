@@ -1,6 +1,10 @@
 package entities;
 
-public class Student {
+import java.util.Comparator;
+
+import services.StudentOperations;
+
+public class Student implements Comparator<Student>, Comparable<Student> {
 
 	private String id;
 	private String name;
@@ -38,4 +42,17 @@ public class Student {
 		this.admissionGrade = admissionGrade;
 	}
 	
+	public int compare(Student s1, Student s2){
+		StudentOperations so = new StudentOperations();
+		String firstAverage = so.calculateAverageGradeForStudent(s1.getId());
+		String secondAverage = so.calculateAverageGradeForStudent(s2.getId());
+		return (Integer.parseInt(secondAverage) - Integer.parseInt(firstAverage));
+	}
+	
+	public int compareTo(Student s) {
+		StudentOperations so = new StudentOperations();
+		String firstAverage = so.calculateAverageGradeForStudent(this.getId());
+		String secondAverage = so.calculateAverageGradeForStudent(s.getId());
+		return secondAverage.compareTo(firstAverage);
+	}
 }

@@ -3,6 +3,7 @@ package services;
 import java.io.FileOutputStream;
 import java.io.PrintWriter;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import database.DatabaseDetails;
@@ -109,40 +110,42 @@ public class StudentOperations {
 		
 		return averageGrades;
 	}
-	
-	public States caculateStateForStudent(String studentId){
-		
-		String credits = calculateCreditsForStudent(studentId);
-		String points = calculatePointsForStudent(studentId);
-		
-		if (credits.equals(DatabaseDetails.MAXIMUM_CREDITS)) {
-			return States.SCOLARSHIP;
-		} 
-		else if (Integer.parseInt(credits) >= Integer.parseInt(DatabaseDetails.MINIMUM_CREDITS)
-				&& Integer.parseInt(points) >= Integer.parseInt(DatabaseDetails.MINIMUM_POINTS_FOR_BUDGET)) {
-			return States.BUDGET;
-		} 
-		else if (Integer.parseInt(credits) >= Integer.parseInt(DatabaseDetails.MINIMUM_CREDITS)
-				&& Integer.parseInt(points) < Integer.parseInt(DatabaseDetails.MINIMUM_POINTS_FOR_BUDGET)) {
-			return States.TAX;
-		} 
-		else
-			return States.REPEATYEAR;
-	}
-	
+	\
 	public List<States> calculateStateForStudents(){
 		
-		List<Student> students = DatabaseFileReader.loadAllStudentsFromDB();
+		List<Student> allStudents = getAllStudents();
+		Collections.sort(allStudents);
+		int countSlotsScolarship = 0,countSlotsBudget = 0,countSlotstTax = 0;
 		List<States> states = new ArrayList<States>();
 		
-		for(Student student:students){
-			States state = caculateStateForStudent(student.getId());
-			
-			states.add(state);
+		for(Student student:allStudents){
+			if(Integer.parseInt(calculateCreditsForStudent(student.getId())) >= 30 && countSlotsScolarship < Integer.parseInt(DatabaseDetails.SLOTS_SCOLARSHIP)){
+				states.add(States.SCOLARSHIP);
+				countSlotsScolarship++;
+			}
+			else if(Integer.parseInt(calculateCreditsForStudent(student.getId())) >= 30 && countSlotsBudget < Integer.parseInt(DatabaseDetails.SLOTS_BUDGET)){
+				states.add(States.BUDGET);
+				countSlotsBudget++;
+			}
+			else if(Integer.parseInt(calculateCreditsForStudent(student.getId())) >= 30 && countSlotstTax < Integer.parseInt(DatabaseDetails.SLOTS_PAID)){
+				states.add(States.TAX);
+				countSlotstTax++;
+			}
+			else{
+				states.add(States.REPEATYEAR);			
+			}
 		}
+		
 		return states;
 	}
 	
+	public List<Student> orderStudentsByAverage(){
+		
+		List<Student> students = getAllStudents();
+		Collections.sort(students);
+		return students;
+	}
+		
 	public void exportSituationToFile(List<MainDisplayObject> mdos) {
 		try {
 			PrintWriter pw = new PrintWriter(new FileOutputStream("C:\\Users\\Ervin\\Desktop\\situation export.tsv"));
@@ -151,8 +154,8 @@ public class StudentOperations {
 			for (MainDisplayObject mdo : mdos) {
 				pw.println(mdo.getStudent().getId() + "\t" + mdo.getStudent().getName() + "\t" + mdo.getAverageGrade() + "\t" + mdo.getCredits() + "\t"
 						+ mdo.getPoints() + "\t" + mdo.getState());
-			}
 			pw.flush();
+			}
 			pw.close();
 			
 		} catch (Exception e) {
