@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -32,17 +33,21 @@ public class Main extends HttpServlet {
 		List<Student> students = studOp.getAllStudents();
 		List<String> points = studOp.calculatePointsForStudents();
 		List<String> averageGrades = studOp.calculateAverageGradeForStudents();
-		List<States> statesList = studOp.calculateStateForStudents();
+		Map<String, States> statesList = studOp.calculateStateForStudents(studOp.getAllStudents());
 		
 		List<MainDisplayObject> mdos = new ArrayList<MainDisplayObject>();
 		
 		for(int i=0;i<students.size();i++){
-			MainDisplayObject mdo = new MainDisplayObject(students.get(i),credits.get(i),points.get(i), averageGrades.get(i), statesList.get(i));
-			mdos.add(mdo);
+			for(Map.Entry<String, States> stateObj:statesList.entrySet()){
+				if(stateObj.getKey().equals(students.get(i).getId())){
+					MainDisplayObject mdo = new MainDisplayObject(students.get(i),credits.get(i),points.get(i), averageGrades.get(i), stateObj.getValue());
+					mdos.add(mdo);
+				}
+			}
+			
 		}
 			
 		request.setAttribute("mdos", mdos);
-			
 		
 		List<MainDisplayObject> copyOfMdos = new ArrayList<MainDisplayObject>();
 		copyOfMdos.addAll(mdos);
@@ -67,13 +72,18 @@ public class Main extends HttpServlet {
 	    		List<Student> students = studOp.getAllStudents();
 	    		List<String> points = studOp.calculatePointsForStudents();
 	    		List<String> averageGrades = studOp.calculateAverageGradeForStudents();
-	    		List<States> statesList = studOp.calculateStateForStudents();
-	    		
 	    		List<MainDisplayObject> mdos = new ArrayList<MainDisplayObject>();
+	    		Map<String, States> statesList = studOp.calculateStateForStudents(studOp.getAllStudents());
+	    		
 	    		
 	    		for(int i=0;i<students.size();i++){
-	    			MainDisplayObject mdo = new MainDisplayObject(students.get(i),credits.get(i),points.get(i), averageGrades.get(i), statesList.get(i));
-	    			mdos.add(mdo);
+	    			for(Map.Entry<String, States> stateObj:statesList.entrySet()){
+	    				if(stateObj.getKey().equals(students.get(i).getId())){
+	    					MainDisplayObject mdo = new MainDisplayObject(students.get(i),credits.get(i),points.get(i), averageGrades.get(i), stateObj.getValue());
+	    					mdos.add(mdo);
+	    				}
+	    			}
+	    			
 	    		}
 	    		
 	    		studOp.exportSituationToFile(mdos);

@@ -59,14 +59,19 @@ public class MainDisplayObject implements Comparator<MainDisplayObject>, Compara
 	}
 	
 	public int compare(MainDisplayObject mdo, MainDisplayObject otherMdo){
-		return (Integer.parseInt(otherMdo.getPoints()) - Integer.parseInt(mdo.getPoints()));
+		double o1 = Double.parseDouble(mdo.getAverageGrade());
+		double o2 = Double.parseDouble(otherMdo.getAverageGrade());
+		
+		if(o1 < o2) return -1;
+		else if(o1 == o2) return 0;
+		else return 1;
 	}
 
 	@Override
 	public int compareTo(MainDisplayObject o) {
-		Integer points1 = Integer.parseInt(this.getPoints());
-		Integer points2 = Integer.parseInt(o.getPoints());
-		return points2.compareTo(points1);
+		Double avg1 = Double.parseDouble(this.getAverageGrade());
+		Double avg2 = Double.parseDouble(o.getAverageGrade());
+		return avg2.compareTo(avg1);
 	}
 		
 }
