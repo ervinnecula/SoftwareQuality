@@ -2,7 +2,6 @@ package services;
 
 import java.io.FileOutputStream;
 import java.io.PrintWriter;
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
@@ -18,7 +17,7 @@ import io.DatabaseFileWriter;
 
 public class StudentOperations {
 
-	public Student getStudentById(String id){
+	public Student getStudentById(int id){
 		return DatabaseFileReader.getStudentById(id);
 	}
 	
@@ -30,7 +29,7 @@ public class StudentOperations {
 		DatabaseFileWriter.saveStudentToFile(student);
 	}
 	
-	public String calculatePointsForStudent(String studentId) {
+	public int calculatePointsForStudent(int studentId){
 
 		int points = 0;
 
@@ -40,101 +39,107 @@ public class StudentOperations {
 
 		for (Grade grade : grades) {
 			if (grade.getGrade() > 5.0 && co.checkIfPassedAtFirstTime(studentId, grade.getCourseId())) {
-				points = points + (int) grade.getGrade() * Integer.parseInt(co.getCreditsOfCourse(grade.getCourseId()));
+				points = points + (int) grade.getGrade() * co.getCreditsOfCourse(grade.getCourseId());
 			}
 		}
-
-		return points+"";
+		return points;
 	}
 	
-	public String calculateCreditsForStudent(String studentId){
+	public int calculateCreditsForStudent(int studentId) {
 		int credits = 0;
 		
-		List<Grade> grades = DatabaseFileReader.loadGradesForStudent(studentId);	
-		
+		List<Grade> grades = DatabaseFileReader.loadGradesForStudent(studentId);
+
 		CourseOperations co = new CourseOperations();
-		
-		for(Grade grade:grades){
-			if(grade.getGrade() >= 5.0 && co.checkIfPassedAtFirstTime(studentId, grade.getCourseId())){
-				credits = credits + Integer.parseInt(co.getCreditsOfCourse(grade.getCourseId()));
+
+		for (Grade grade : grades) {
+			if (grade.getGrade() >= 5.0 && co.checkIfPassedAtFirstTime(studentId, grade.getCourseId())) {
+				credits = credits + co.getCreditsOfCourse(grade.getCourseId());
 			}
 		}
 
-		return credits+"";
+		return credits;
 	}
 	
-	public List<String> calculateCreditsForStudents(){
+	public int[] calculateCreditsForStudents() {
 		List<Student> students = DatabaseFileReader.loadAllStudentsFromDB();
-		List<String> creditList = new ArrayList<String>();
-		for(Student student:students){
-			String credits = calculateCreditsForStudent(student.getId());
-			creditList.add(credits);
+		int[] creditList = new int[students.size()];
+		int i = 0;
+		for(Student student:students){ 
+			int credits = calculateCreditsForStudent(student.getId());
+			creditList[i] = credits;
+			i++;
 		}
 		return creditList;
 	}
 	
-	public List<String> calculatePointsForStudents(){
+	public int[] calculatePointsForStudents() {
 		List<Student> students = DatabaseFileReader.loadAllStudentsFromDB();
-		List<String> pointsList = new ArrayList<String>();
+		int[] pointsList = new int[students.size()];
+		int i = 0;
+		
 		for(Student student:students){
-			String points = calculatePointsForStudent(student.getId());
-			pointsList.add(points);
+			int points = calculatePointsForStudent(student.getId());
+			pointsList[i] = points;
+			i++;
 		}
 		return pointsList;
 	}
 	
-	public String calculateAverageGradeForStudent(String studentId){
-		
-		List<Grade> gradesOfStudent = DatabaseFileReader.loadGradesForStudent(studentId);
-		
+	public double calculateAverageGradeForStudent(int studentId) {
+
 		double totalOfGrades = 0.0;
 		int counter = 0;
-		double average;
+		double average = 0.0;
+
+		List<Grade> gradesOfStudent = DatabaseFileReader.loadGradesForStudent(studentId);
 		
-		for(Grade grade:gradesOfStudent){
-			totalOfGrades += grade.getGrade();
-			counter++;
-		}
-		
-		if(gradesOfStudent.size() != 0){
+		if(gradesOfStudent != null){
+			for (Grade grade : gradesOfStudent) {
+				totalOfGrades += grade.getGrade();
+				counter++;
+			}
 			average = totalOfGrades / counter;
+			return average;
 		}
-		else{
-			average = 0;
-		}
-		return average+"";
+		
+		return -1;
+
 	}
 	
-	public List<String> calculateAverageGradeForStudents(){
-		
-		List<String> averageGrades = new ArrayList<String>();
+	public double[] calculateAverageGradeForStudents(){
 		
 		List<Student> studentList = DatabaseFileReader.loadAllStudentsFromDB();
+		
+		double[] averageGrades = new double[studentList.size()];
+		int i = 0;
+		
 		for(Student student: studentList){
-			String average = calculateAverageGradeForStudent(student.getId());
-			averageGrades.add(average);
+			double average = calculateAverageGradeForStudent(student.getId());
+			averageGrades[i] = average;
+			i++;
 		}
 		
 		return averageGrades;
 	}
 	
-	public Map<String, States> calculateStateForStudents(List<Student> allStudents){
+	public Map<Integer, States> calculateStateForStudents(List<Student> allStudents){
 		
 		Collections.sort(allStudents);
 		int countSlotsScolarship = 0,countSlotsBudget = 0,countSlotstTax = 0;
 		
-		Map<String, States> studentState = new TreeMap<String, States>();
+		Map<Integer, States> studentState = new TreeMap<Integer, States>();
 		
 		for(Student student:allStudents){
-			if(Integer.parseInt(calculateCreditsForStudent(student.getId())) >= 30 && countSlotsScolarship < Integer.parseInt(DatabaseDetails.SLOTS_SCOLARSHIP)){
+			if(calculateCreditsForStudent(student.getId()) >= 30 && countSlotsScolarship < DatabaseDetails.SLOTS_SCOLARSHIP){
 				studentState.put(student.getId(), States.SCOLARSHIP);
 				countSlotsScolarship++;
 			}
-			else if(Integer.parseInt(calculateCreditsForStudent(student.getId())) >= 30 && countSlotsBudget < Integer.parseInt(DatabaseDetails.SLOTS_BUDGET)){
+			else if(calculateCreditsForStudent(student.getId()) >= 30 && countSlotsBudget < DatabaseDetails.SLOTS_BUDGET){
 				studentState.put(student.getId(), States.BUDGET);
 				countSlotsBudget++;
 			}
-			else if(Integer.parseInt(calculateCreditsForStudent(student.getId())) >= 30 && countSlotstTax < Integer.parseInt(DatabaseDetails.SLOTS_PAID)){
+			else if(calculateCreditsForStudent(student.getId()) >= 30 && countSlotstTax < DatabaseDetails.SLOTS_PAID){
 				studentState.put(student.getId(), States.TAX);
 				countSlotstTax++;
 			}
@@ -170,15 +175,19 @@ public class StudentOperations {
 		}
 	}
 	
-	public void exportStudentToFile(String studentId, List<MainDisplayObject> mdos){
+	public void exportStudentToFile(int studentId, List<MainDisplayObject> mdos){
 		
 		try {
 			PrintWriter pw = new PrintWriter(new FileOutputStream(DatabaseDetails.EXPORT_PATH + "situation student " + studentId + ".tsv"));
 		
 			for (MainDisplayObject mdo : mdos) {
-				if (mdo.getStudent().getId().equals(studentId)) {
-					pw.println(mdo.getStudent().getId()  + "\t" + mdo.getStudent().getName() +  "\t" + mdo.getAverageGrade() + "\t" + mdo.getCredits() + "\t"
-							+ mdo.getPoints() + "\t" + mdo.getState());
+				if (mdo.getStudent().getId() == studentId) {
+					pw.println(mdo.getStudent().getId() 
+							   + "\t" + mdo.getStudent().getName()
+							   + "\t" + mdo.getAverageGrade()
+							   + "\t" + mdo.getCredits()
+							   + "\t" + mdo.getPoints()
+							   + "\t" + mdo.getState());
 				}
 			}
 			pw.close();

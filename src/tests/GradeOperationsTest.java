@@ -1,39 +1,49 @@
 package tests;
 
-import static org.junit.Assert.*;
-import io.DatabaseFileReader;
+import static org.junit.Assert.assertEquals;
 
 import java.util.List;
-import java.util.Map;
 
+import org.junit.Before;
 import org.junit.Test;
 
-import services.CourseOperations;
-import services.GradeOperations;
-import services.StudentOperations;
 import entities.Course;
 import entities.Grade;
 import entities.Student;
+import io.DatabaseFileReader;
+import services.CourseOperations;
+import services.GradeOperations;
+import services.StudentOperations;
 
 public class GradeOperationsTest {
 
+	CourseOperations co = new CourseOperations();
+	StudentOperations so = new StudentOperations();
+	GradeOperations go = new GradeOperations();
+	
+	Course courseForTest;
+	Student studForTest;
+	Grade gradeForTest;
+	
+	@Before
+	public void initialize(){
+		courseForTest = new Course(300, "courseNameForTest", 1, 1, 5);
+		studForTest = new Student(10, "studNameForTest", 2013, 8.9);
+		gradeForTest = new Grade(studForTest.getId(), courseForTest.getId(), 8.0, 2014);
+	}
+	
 	@Test
-	public void test() {
-		CourseOperations co = new CourseOperations();
-		StudentOperations so = new StudentOperations();
-		GradeOperations go = new GradeOperations();
-		Course courseForTest = new Course("courseIdForTest5", "courseNameForTest5", "1", "1", "5");
-		Student studForTest = new Student("studIdForTest5", "studNameForTest5", "2013", "8.9");
-		Grade gradeForTest = new Grade(studForTest.getId(), courseForTest.getId(), 8.0, "2014");
+	public void test(){
+
 		co.saveCourse(courseForTest);
 		so.saveStudent(studForTest);
 		go.saveGrade(gradeForTest);
-		DatabaseFileReader dbr = new DatabaseFileReader();
-		List<Grade> grades=dbr.loadGradesForStudent(studForTest.getId());
-		Grade foundGr=null;
-		for(Grade gr : grades ) {
-			if(gr.getCourseId().equals(courseForTest.getId()) && gr.getYear().equals("2014")) {
-				foundGr=gr;
+
+		List<Grade> grades = DatabaseFileReader.loadGradesForStudent(studForTest.getId());
+		Grade foundGr = null;
+		for(Grade gr : grades) {
+			if(gr.getCourseId() == courseForTest.getId() && gr.getYear() == 2014) {
+				foundGr = gr;
 			}
 		}
 		assertEquals(gradeForTest.getGrade(), foundGr.getGrade(),2);

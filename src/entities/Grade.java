@@ -2,27 +2,27 @@ package entities;
 
 public class Grade {
 	
-	private String studentId;
-	private String courseId;
+	private int studentId;
+	private int courseId;
 	private double grade;
-	private String year;
+	private int year;
 	
-	public Grade(String studentId, String courseId, double grade, String year) {
+	public Grade(int studentId, int courseId, double grade, int year) {
 		this.studentId = studentId;
 		this.courseId = courseId;
 		this.grade = grade;
 		this.year = year;
 	}
-	public String getStudentId() {
+	public int getStudentId() {
 		return studentId;
 	}
-	public void setStudentId(String studentId) {
+	public void setStudentId(int studentId) {
 		this.studentId = studentId;
 	}
-	public String getCourseId() {
+	public int getCourseId() {
 		return courseId;
 	}
-	public void setCourseId(String courseId) {
+	public void setCourseId(int courseId) {
 		this.courseId = courseId;
 	}
 	public double getGrade() {
@@ -31,10 +31,10 @@ public class Grade {
 	public void setGrade(double grade) {
 		this.grade = grade;
 	}
-	public String getYear() {
+	public int getYear() {
 		return year;
 	}
-	public void setYear(String year) {
+	public void setYear(int year) {
 		this.year = year;
 	}
 

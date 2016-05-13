@@ -5,18 +5,18 @@ import java.util.Comparator;
 public class MainDisplayObject implements Comparator<MainDisplayObject>, Comparable<MainDisplayObject> {
 	
 	private Student student;
-	private String credits;
-	private String points;
-	private String averageGrade;
+	private int credits;
+	private int points;
+	private double averageGrade;
 	private States state;
 	
-	public MainDisplayObject(Student student, String credits, String points, String averageGrade, States state){
+	public MainDisplayObject(Student student, int credits, int points, double averageGrade, States state){
 		this.student = student;
 		this.credits = credits;
 		this.points = points;
 		this.averageGrade = averageGrade;
 		this.state = state;
-	}
+	} 
 
 	public Student getStudent() {
 		return student;
@@ -26,27 +26,27 @@ public class MainDisplayObject implements Comparator<MainDisplayObject>, Compara
 		this.student = student;
 	}
 
-	public String getCredits() {
+	public int getCredits() {
 		return credits;
 	}
 
-	public void setCredits(String credits) {
+	public void setCredits(int credits) {
 		this.credits = credits;
 	}
 
-	public String getPoints() {
+	public int getPoints() {
 		return points;
 	}
 
-	public void setPoints(String points) {
+	public void setPoints(int points) {
 		this.points = points;
 	}
 
-	public String getAverageGrade() {
+	public double getAverageGrade() {
 		return averageGrade;
 	}
 
-	public void setAverageGrade(String averageGrade) {
+	public void setAverageGrade(double averageGrade) {
 		this.averageGrade = averageGrade;
 	}
 	
@@ -59,8 +59,8 @@ public class MainDisplayObject implements Comparator<MainDisplayObject>, Compara
 	}
 	
 	public int compare(MainDisplayObject mdo, MainDisplayObject otherMdo){
-		double o1 = Double.parseDouble(mdo.getAverageGrade());
-		double o2 = Double.parseDouble(otherMdo.getAverageGrade());
+		double o1 = mdo.getAverageGrade();
+		double o2 = otherMdo.getAverageGrade();
 		
 		if(o1 < o2) return -1;
 		else if(o1 == o2) return 0;
@@ -69,8 +69,8 @@ public class MainDisplayObject implements Comparator<MainDisplayObject>, Compara
 
 	@Override
 	public int compareTo(MainDisplayObject o) {
-		Double avg1 = Double.parseDouble(this.getAverageGrade());
-		Double avg2 = Double.parseDouble(o.getAverageGrade());
+		Double avg1 = this.getAverageGrade();
+		Double avg2 = o.getAverageGrade();
 		return avg2.compareTo(avg1);
 	}
 		

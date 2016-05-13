@@ -27,15 +27,20 @@ public class AddCourse extends HttpServlet {
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
-		String name = (String) request.getParameter("name");
-		String id = (String) request.getParameter("id");
-		String year = (String) request.getParameter("year");
-		String semester = (String) request.getParameter("semester");
-		String credit = (String) request.getParameter("credit");
-		
-		CourseOperations co = new CourseOperations();
-		co.saveCourse(new Course(id, name, semester, year, credit));
-		
+		try {
+
+			String name = (String) request.getParameter("name");
+			int id = Integer.parseInt(request.getParameter("id"));
+			int year = Integer.parseInt(request.getParameter("year"));
+			int semester = Integer.parseInt(request.getParameter("semester"));
+			int credit = Integer.parseInt(request.getParameter("credit"));
+
+			CourseOperations co = new CourseOperations();
+			co.saveCourse(new Course(id, name, semester, year, credit));
+			
+		} catch (NumberFormatException e) {
+			e.getCause();
+		}
 		request.getRequestDispatcher("WEB-INF/addCourse.jsp").forward(request, response);
 	}
 

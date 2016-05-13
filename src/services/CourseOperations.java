@@ -25,32 +25,43 @@ public class CourseOperations {
 		DatabaseFileWriter.saveCourseToFile(course);
 	}
 	
-	public boolean checkIfPassedAtFirstTime(String studentId, String courseId){
-		List<Course> courses = DatabaseFileReader.loadAllCoursesFromDB();
-		List<Grade> grades = DatabaseFileReader.loadGradesForStudent(studentId);
+	public void removeCourse(Course course){
+		DatabaseFileWriter.removeCourseFromFile(course);
+	}
+	
+	public boolean checkIfPassedAtFirstTime(int studentId, int courseId){
 		
-		for(Grade grade: grades){
-			for(Course course:courses){
-				if(grade.getCourseId().equals(courseId) && grade.getCourseId().equals(course.getId()) && grade.getYear().equals(course.getYear())){
+		List<Course> courses = DatabaseFileReader.loadAllCoursesFromDB();
+		
+
+		List<Grade> grades = DatabaseFileReader.loadGradesForStudent(studentId);
+
+		for (Grade grade : grades) {
+			for (Course course : courses) {
+				if (grade.getCourseId() == courseId && grade.getCourseId() == course.getId()
+						&& grade.getYear() == course.getYear()) {
 					return true;
 				}
-				
+
 			}
-		}	
+		}
+
 		return false;
 	}
 	
-	public String getCreditsOfCourse(String courseId){
+	public int getCreditsOfCourse(int courseId){
+		int credits = 0;
+		boolean found = false;
 		
 		List<Course> courses = DatabaseFileReader.loadAllCoursesFromDB();
-		
-		for(Course course:courses){
-			if(course.getId().equals(courseId)){
+
+		for (Course course : courses) {
+			if (course.getId() == courseId) {
 				return course.getCredit();
 			}
 		}
 		
-		return null;
+		return -1;
 	}
 	
 	public void exportCoursesToFile(){

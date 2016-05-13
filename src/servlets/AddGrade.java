@@ -27,13 +27,21 @@ protected void doGet(HttpServletRequest request, HttpServletResponse response) t
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
-		String studId = (String) request.getParameter("studId");
-		String courseId = (String) request.getParameter("courseId");
-		String grade = (String) request.getParameter("grade");
-		String year = (String) request.getParameter("year");
-		
-		GradeOperations gOp = new GradeOperations();
-		gOp.saveGrade(new Grade(studId, courseId, Double.parseDouble(grade), year));
+		try {
+
+			int studId = Integer.parseInt(request.getParameter("studId"));
+			int courseId = Integer.parseInt(request.getParameter("courseId"));
+			double grade = Double.parseDouble(request.getParameter("grade"));
+			int year = Integer.parseInt(request.getParameter("year"));
+
+			GradeOperations gOp = new GradeOperations();
+			gOp.saveGrade(new Grade(studId, courseId, grade, year));
+			
+		} catch (NumberFormatException e) {
+			e.printStackTrace();
+		} catch (NullPointerException e) {
+			e.printStackTrace();
+		}
 		
 		request.getRequestDispatcher("WEB-INF/addGrade.jsp").forward(request, response);
 	}

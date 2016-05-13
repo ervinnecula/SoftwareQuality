@@ -1,5 +1,9 @@
 package io;
 
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
@@ -47,4 +51,21 @@ public class DatabaseFileWriter {
 			e.printStackTrace();
 		}
 	}
+	
+//	public static void removeStudentFromFile(Student student){
+//		
+//		
+//		BufferedReader reader = new BufferedReader(new FileReader(DatabaseDetails.PATH_TO_STUDENTS_FILE));
+//		BufferedWriter writer = new BufferedWriter(new FileWriter("temporaryFile.tsv"));
+//		
+//		String line;
+//		String[] splits;
+//		try{
+//			while((line = reader.readLine()) != null){
+//				String trimmedLine = line.trim();
+//				splits = trimmedLine.split("\t");
+//				if(splits[0].equals(anObject))
+//			}
+//		}
+//	}
 }

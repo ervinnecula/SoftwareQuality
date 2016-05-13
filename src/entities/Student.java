@@ -6,21 +6,21 @@ import services.StudentOperations;
 
 public class Student implements Comparator<Student>, Comparable<Student> {
 
-	private String id;
+	private int id;
 	private String name;
-	private String startingYear;
-	private String admissionGrade;
+	private int startingYear;
+	private double admissionGrade;
 	
-	public Student(String id, String name, String startingYear, String admissionGrade) {
+	public Student(int id, String name, int startingYear, double admissionGrade) {
 		this.id = id;
 		this.name = name;
 		this.startingYear = startingYear;
 		this.admissionGrade = admissionGrade;
 	}
-	public String getId() {
+	public int getId() {
 		return id;
 	}
-	public void setId(String id) {
+	public void setId(int id) {
 		this.id = id;
 	}
 	public String getName() {
@@ -29,30 +29,37 @@ public class Student implements Comparator<Student>, Comparable<Student> {
 	public void setName(String name) {
 		this.name = name;
 	}
-	public String getStartingYear() {
+	public int getStartingYear() {
 		return startingYear;
 	}
-	public void setStartingYear(String startingYear) {
+	public void setStartingYear(int startingYear) {
 		this.startingYear = startingYear;
 	}
-	public String getAdmissionGrade() {
+	public double getAdmissionGrade() {
 		return admissionGrade;
 	}
-	public void setAdmissionGrade(String admissionGrade) {
+	public void setAdmissionGrade(double admissionGrade) {
 		this.admissionGrade = admissionGrade;
 	}
 	
 	public int compare(Student s1, Student s2){
 		StudentOperations so = new StudentOperations();
-		String firstAverage = so.calculateAverageGradeForStudent(s1.getId());
-		String secondAverage = so.calculateAverageGradeForStudent(s2.getId());
-		return (Integer.parseInt(secondAverage) - Integer.parseInt(firstAverage));
+		double o1 = so.calculateAverageGradeForStudent(s1.getId());
+		double o2 = so.calculateAverageGradeForStudent(s2.getId());
+		
+		if(o1 < o2){ 
+			return -1;	
+		}
+		else if(o1 == o2){
+			return 0;
+		}
+		else return 1;
 	}
 	
 	public int compareTo(Student s) {
 		StudentOperations so = new StudentOperations();
-		String firstAverage = so.calculateAverageGradeForStudent(this.getId());
-		String secondAverage = so.calculateAverageGradeForStudent(s.getId());
+		Double firstAverage = so.calculateAverageGradeForStudent(this.getId());
+		Double secondAverage = so.calculateAverageGradeForStudent(s.getId());
 		return secondAverage.compareTo(firstAverage);
 	}
 }

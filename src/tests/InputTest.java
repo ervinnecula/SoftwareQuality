@@ -16,14 +16,15 @@ public class InputTest {
 
 	StudentOperations so = new StudentOperations();
 	CourseOperations co = new CourseOperations();
-	Course course;
-	Student student;
+	Course course, course1;
+	Student student, student1;
+	
 	@Before
 	public void initialize() {
-//		course = new Course("asd", "Fizica Informatica", "5", "5", "30");
-		course = new Course("1", "Geografie", "1", "3", "40");
-//		Student student = new Student("asd", "123", "-1000", "aa12");
-		student = new Student("1","Vasile1","1960","5.99");
+		course = new Course(300, "Fizica Informatica", 5, 5, 30);
+		course1 = new Course(301, "Geografie", 1, 3, 40);
+		student = new Student(11, "123", -1000, 999);
+		student1 = new Student(12,"Vasile1", 1960, 5.99);
 	}
 
 	@Test
@@ -32,9 +33,8 @@ public class InputTest {
 		boolean idCorrect = true;
 	
 		// id contains letters
-		if (Pattern.matches(student.getId(),"[a-zA-Z]+")) {
+		if (Pattern.matches(student.getId()+"","[a-zA-Z]+")) {
 			idCorrect = false;
-			
 		} 
 		assertEquals(true, idCorrect);
 	}
@@ -45,7 +45,6 @@ public class InputTest {
 		
 		if (Pattern.matches(student.getName(),"[1-9]+")) {
 			nameCorrect = false;
-			
 		}
 		assertEquals(true, nameCorrect);
 	}
@@ -55,18 +54,18 @@ public class InputTest {
 		
 		boolean yearCorrect = true;
 		
-		if (Pattern.matches(student.getStartingYear(),"[a-zA-Z]") || student.getStartingYear().length() != 4
-				|| Integer.parseInt(student.getStartingYear()) < 1950) {
+		if (Pattern.matches(student.getStartingYear()+"","[a-zA-Z]+") || student.getStartingYear() > 9999 ||
+			student.getStartingYear() < 999) {
 			yearCorrect = false;	
 		}
 		assertEquals(true, yearCorrect);
 	}
 	
-	@Test(expected=NumberFormatException.class)
+	@Test
 	public void studentValidationGrade(){
 		  boolean gradeCorrect = true;
-		  String grade = student.getAdmissionGrade();
-		  if (Pattern.matches(grade,"[a-zA-Z]") || Integer.parseInt(grade) < 0.0 || Integer.parseInt(grade) > 10.0){
+		  double grade = student.getAdmissionGrade();
+		  if (Pattern.matches(grade+"","[a-zA-Z]+") || grade < 0.0 || grade > 10.0){
 			  gradeCorrect = false;
 		  }
 		  assertEquals(true, gradeCorrect);
@@ -78,10 +77,9 @@ public class InputTest {
 		boolean idCorrect = true;
 
 		// id contains letters
-		if (Pattern.matches("[a-zA-Z]*", course.getId()) && course.getId().length() == 3) {
+		if (Pattern.matches(course.getId()+"","[a-zA-Z]+") || (course.getId() >  999 || course.getId() < 99)) {
 			idCorrect = false;
 		}
-
 		assertEquals(true, idCorrect);
 	}
 
@@ -90,10 +88,9 @@ public class InputTest {
 		
 		boolean nameCorrect = true;
 		// name contains numbers
-		if(Pattern.matches("[0-9]*",course.getName())){
+		if(Pattern.matches(course.getName(),"[0-9]+")){
 			nameCorrect = false;
 		}
-		
 		assertEquals(true, nameCorrect);
 	}
 	
@@ -102,7 +99,7 @@ public class InputTest {
 		
 		boolean semesterCorrect = true;
 		
-		if (Integer.parseInt(course.getSemester()) != 1 && Integer.parseInt(course.getSemester()) != 2){
+		if (course.getSemester() != 1 && course.getSemester() != 2){
 			semesterCorrect = false;
 		}
 		assertEquals(true, semesterCorrect);
@@ -113,8 +110,7 @@ public class InputTest {
 		
 		boolean yearCorrect = true;
 		
-		if (Pattern.matches("[a-zA-Z]", course.getYear()) || Integer.parseInt(course.getYear()) < 1
-				|| Integer.parseInt(course.getYear()) > 3) {
+		if (Pattern.matches(course.getYear()+"", "[a-zA-Z]+") || course.getYear() < 1 || course.getYear() > 3) {
 			yearCorrect = false;
 		}
 		
@@ -126,10 +122,9 @@ public class InputTest {
 		
 		boolean creditCorrect = true;
 		
-		if (Pattern.matches("[a-zA-Z]",course.getCredit()) && Integer.parseInt(course.getCredit()) < 0.0) {
+		if (Pattern.matches(course.getCredit()+"", "[a-zA-Z]+") && course.getCredit() < 0.0) {
 			creditCorrect = false;
 		}
-		
 		assertEquals(true, creditCorrect);
 	}
 	

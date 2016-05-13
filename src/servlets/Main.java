@@ -28,72 +28,80 @@ public class Main extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
 		StudentOperations studOp = new StudentOperations();
-		
-		List<String> credits = studOp.calculateCreditsForStudents();
+
+		int[] credits = studOp.calculateCreditsForStudents();
 		List<Student> students = studOp.getAllStudents();
-		List<String> points = studOp.calculatePointsForStudents();
-		List<String> averageGrades = studOp.calculateAverageGradeForStudents();
-		Map<String, States> statesList = studOp.calculateStateForStudents(studOp.getAllStudents());
-		
+		int[] points = studOp.calculatePointsForStudents();
+		double[] averageGrades = studOp.calculateAverageGradeForStudents();
+		Map<Integer, States> statesList = studOp.calculateStateForStudents(studOp.getAllStudents());
+
 		List<MainDisplayObject> mdos = new ArrayList<MainDisplayObject>();
-		
-		for(int i=0;i<students.size();i++){
-			for(Map.Entry<String, States> stateObj:statesList.entrySet()){
-				if(stateObj.getKey().equals(students.get(i).getId())){
-					MainDisplayObject mdo = new MainDisplayObject(students.get(i),credits.get(i),points.get(i), averageGrades.get(i), stateObj.getValue());
+
+		for (int i = 0; i < students.size(); i++) {
+			for (Map.Entry<Integer, States> stateObj : statesList.entrySet()) {
+				if (stateObj.getKey().equals(students.get(i).getId())) {
+					MainDisplayObject mdo = new MainDisplayObject(students.get(i), credits[i], points[i],
+							averageGrades[i], stateObj.getValue());
 					mdos.add(mdo);
 				}
 			}
-			
+
 		}
-			
+
 		request.setAttribute("mdos", mdos);
-		
+
 		List<MainDisplayObject> copyOfMdos = new ArrayList<MainDisplayObject>();
 		copyOfMdos.addAll(mdos);
-		
+
 		CourseOperations courseOp = new CourseOperations();
 		request.setAttribute("courses", courseOp.getAllCourses());
-		
+
 		Collections.sort(copyOfMdos);
 		request.setAttribute("orderedMdos", copyOfMdos);
-		
+
 		request.getRequestDispatcher("WEB-INF/main.jsp").forward(request, response);
+			
+
 
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
-	        if (request.getParameter("button1") != null) {
-	            
-	        	StudentOperations studOp = new StudentOperations();
-	    		
-	    		List<String> credits = studOp.calculateCreditsForStudents();
-	    		List<Student> students = studOp.getAllStudents();
-	    		List<String> points = studOp.calculatePointsForStudents();
-	    		List<String> averageGrades = studOp.calculateAverageGradeForStudents();
-	    		List<MainDisplayObject> mdos = new ArrayList<MainDisplayObject>();
-	    		Map<String, States> statesList = studOp.calculateStateForStudents(studOp.getAllStudents());
-	    		
-	    		
-	    		for(int i=0;i<students.size();i++){
-	    			for(Map.Entry<String, States> stateObj:statesList.entrySet()){
-	    				if(stateObj.getKey().equals(students.get(i).getId())){
-	    					MainDisplayObject mdo = new MainDisplayObject(students.get(i),credits.get(i),points.get(i), averageGrades.get(i), stateObj.getValue());
-	    					mdos.add(mdo);
-	    				}
-	    			}
-	    			
-	    		}
-	    		
-	    		studOp.exportSituationToFile(mdos);
-	    		
-	        } else if (request.getParameter("button2") != null) {
-	        	CourseOperations courseOp = new CourseOperations();
-	    		courseOp.exportCoursesToFile();
-	        }
+		if (request.getParameter("button1") != null) {
 
-	        this.doGet(request, response);
+			StudentOperations studOp = new StudentOperations();
+
+			int[] credits = studOp.calculateCreditsForStudents();
+			List<Student> students = studOp.getAllStudents();
+			int[] points = studOp.calculatePointsForStudents();
+			double[] averageGrades = studOp.calculateAverageGradeForStudents();
+			Map<Integer, States> statesList = studOp.calculateStateForStudents(studOp.getAllStudents());
+			List<MainDisplayObject> mdos = new ArrayList<MainDisplayObject>();
+
+			for (int i = 0; i < students.size(); i++) {
+				for (Map.Entry<Integer, States> stateObj : statesList.entrySet()) {
+					if (stateObj.getKey().equals(students.get(i).getId())) {
+						MainDisplayObject mdo = new MainDisplayObject(students.get(i),
+																	  credits[i],
+																	  points[i],
+																	  averageGrades[i],
+																	  stateObj.getValue());
+						mdos.add(mdo);
+					}
+				}
+
+			}
+
+			studOp.exportSituationToFile(mdos);
+
+		} else if (request.getParameter("button2") != null) {
+			CourseOperations courseOp = new CourseOperations();
+			courseOp.exportCoursesToFile();
+		}
+
+		this.doGet(request, response);
+
 	}
+
 
 }
